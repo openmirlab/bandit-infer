@@ -33,8 +33,9 @@ def test_malformed_config_raises(tmp_path: Path) -> None:
 
 
 def test_cache_info_uses_resolver_candidate_without_materializing(tmp_path: Path) -> None:
-    assert cache_info(get_spec(), cache_dir=tmp_path)["exists"] is False
-    assert not tmp_path.exists()
+    info = cache_info(get_spec(), cache_dir=tmp_path)
+    assert info["exists"] is False
+    assert not info["path"].exists()
 
 
 def test_official_unverified_download_is_rejected() -> None:
