@@ -1,0 +1,6 @@
+bandit-infer is an independent, inference-only packaging effort. It does not
+bundle, rehost, convert, or redistribute model weights.
+
+It is based on the public Bandit and Bandit-v2 research repositories by Karn
+Watcharasupat and collaborators. Their Apache-2.0 code license and the separate
+Zenodo weight licenses are documented in README.md and checkpoints.toml.

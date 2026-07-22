@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bandit-infer"
+dynamic = ["version"]
+description = "Inference-only runtime and checkpoint registry for Bandit cinematic source separation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Karn Watcharasupat" },
+  { name = "Chih-Wei Wu" },
+  { name = "Yiwei Ding" },
+  { name = "Iroro Orife" },
+  { name = "Aaron J. Hipple" },
+  { name = "Phillip A. Williams" },
+  { name = "Scott Kramer" },
+  { name = "Alexander Lerch" },
+  { name = "William Wolcott" },
+]
+maintainers = [{ name = "Paul Yu", email = "bernie40916@gmail.com" }]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Sound/Audio :: Analysis",
+]
+dependencies = ["numpy>=1.24", "torch>=2.0"]
+
+[project.optional-dependencies]
+audio = ["soundfile>=0.12"]
+dev = ["build>=1.2", "pytest>=8.0"]
+
+[project.scripts]
+bandit-infer = "bandit_infer.cli:main"
+
+[project.urls]
+Source = "https://github.com/ChenPaulYu/bandit-infer"
+UpstreamV1 = "https://github.com/kwatcharasupat/bandit"
+UpstreamV2 = "https://github.com/kwatcharasupat/bandit-v2"
+
+[tool.hatch.version]
+path = "src/bandit_infer/__about__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bandit_infer"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/bandit_infer/config/checkpoints.toml" = "bandit_infer/config/checkpoints.toml"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

@@ -1,0 +1,75 @@
+# Official Zenodo metadata captured 2026-07-22. Zenodo exposes only MD5 for
+# these records; sha256 is deliberately blank until each official download is
+# independently hashed. The resolver rejects automatic use of such entries.
+schema_version = 1
+default = "v1-mus64-l1snr"
+
+[records]
+v1 = "https://zenodo.org/records/10160698"
+v2 = "https://zenodo.org/records/12701995"
+
+[[checkpoints]]
+key="v1-mus48-l1snr"; backend="v1"; variant="multi-mus48"; filename="dnr-3s-mus48-l1snr.ckpt"; size=404244083; md5="62cddbe0b8e3e5138b6c5610b2df5d3b"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-mus48-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-mus48"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-bark48-l1snr"; backend="v1"; variant="multi-bark48"; filename="dnr-3s-bark48-l1snr.ckpt"; size=775537139; md5="947cd46348d4a613d72e5c027de96146"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-bark48-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-bark48"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-erb48-l1snr"; backend="v1"; variant="multi-erb48"; filename="dnr-3s-erb48-l1snr.ckpt"; size=393210291; md5="af4f36d425d346ddd51044e9d914a37e"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-erb48-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-erb48"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-mel48-l1snr"; backend="v1"; variant="multi-mel48"; filename="dnr-3s-mel48-l1snr.ckpt"; size=394672243; md5="7000623e417357fe87587bb153f0bddc"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-mel48-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-mel48"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-vox7-l2"; backend="v1"; variant="multi-vox7"; filename="dnr-3s-vox7-l2.ckpt"; size=309531963; md5="00d913a43291e517bb8c5eb0bf54e27b"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-vox7-l2.ckpt/content"; source_config="bsrnn-small-dnr-multi-vox7"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-tribark48-l1snr"; backend="v1"; variant="multi-tribark48"; filename="dnr-3s-tribark48-l1snr.ckpt"; size=393667827; md5="f6017910bb15ec81002c590002bd131d"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-tribark48-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-tbark48"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-mus64-l1snr"; backend="v1"; variant="multi-mus64"; filename="dnr-3s-mus64-l1snr.ckpt"; size=446386115; md5="db5fbc961b47c99a5a0af01520a99be1"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-mus64-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-vox7-l1snr"; backend="v1"; variant="multi-vox7"; filename="dnr-3s-vox7-l1snr.ckpt"; size=309531899; md5="9a228a567fc34a8748e804b481fa9978"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-vox7-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-vox7"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-tribark64-l1snr"; backend="v1"; variant="multi-tribark64"; filename="dnr-3s-tribark64-l1snr.ckpt"; size=434037763; md5="3007849d38a324af12da5142b178619b"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-tribark64-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-tbark64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-erb64-l1snr"; backend="v1"; variant="multi-erb64"; filename="dnr-3s-erb64-l1snr.ckpt"; size=433648131; md5="90f29625abb9cb54ae87ebe792f8c364"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-erb64-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-erb64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-bark64-l1snr"; backend="v1"; variant="multi-bark64"; filename="dnr-3s-bark64-l1snr.ckpt"; size=993738115; md5="b3b576a56ecbc602bb191fabaa931480"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-bark64-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-bark64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-mus64-l1snr-plus"; backend="v1"; variant="multi-mus64"; filename="dnr-3s-mus64-l1snr-plus.ckpt"; size=446403715; md5="aac7e202a91de2c354a18606236a8038"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-mus64-l1snr-plus.ckpt/content"; source_config="bsrnn-small-dnr-multi-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-mel64-l1snr"; backend="v1"; variant="multi-mel64"; filename="dnr-3s-mel64-l1snr.ckpt"; size=582296643; md5="64c954360ed619f1f9bf104b95097be8"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-mel64-l1snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-mel64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-vox7-l1"; backend="v1"; variant="multi-vox7"; filename="dnr-3s-vox7-l1.ckpt"; size=311648954; md5="37d75d407aaef41e17b240b83128aa51"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-vox7-l1.ckpt/content"; source_config="bsrnn-small-dnr-multi-vox7"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-vox7-l2snr"; backend="v1"; variant="multi-vox7"; filename="dnr-3s-vox7-l2snr.ckpt"; size=309531899; md5="96038d1864ff9fd8b484a725ead7e4eb"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-3s-vox7-l2snr.ckpt/content"; source_config="bsrnn-small-dnr-multi-vox7"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v1-gru8-vox7-speech"; backend="v1"; variant="single-gru8-vox7"; filename="dnr-bsrnn-gru8-vox7-l1-speech.ckpt"; size=189972555; md5="b112a06103f68b7642e63359842e151f"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-bsrnn-gru8-vox7-l1-speech.ckpt/content"; source_config="bsrnn-small-dnr-ps-vox7-speech"; stems=["speech"]
+[[checkpoints]]
+key="v1-gru8-vox7-music"; backend="v1"; variant="single-gru8-vox7"; filename="dnr-bsrnn-gru8-vox7-l1-music.ckpt"; size=189971339; md5="feecf2a07d56c2dc5a7ac795d75d6326"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-bsrnn-gru8-vox7-l1-music.ckpt/content"; source_config="bsrnn-small-dnr-ps-vox7-music"; stems=["music"]
+[[checkpoints]]
+key="v1-gru8-vox7-effects"; backend="v1"; variant="single-gru8-vox7"; filename="dnr-bsrnn-gru8-vox7-l1-effects.ckpt"; size=189973707; md5="539fa470e533ff955d56f162750f0285"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-bsrnn-gru8-vox7-l1-effects.ckpt/content"; source_config="bsrnn-small-dnr-ps-vox7-effects"; stems=["effects"]
+[[checkpoints]]
+key="v1-lstm12-vox7-speech"; backend="v1"; variant="single-lstm12-vox7"; filename="dnr-bsrnn-lstm12-vox7-l1-speech.ckpt"; size=310242691; md5="2087dd4abe0513063f3439f1c8bd5620"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-bsrnn-lstm12-vox7-l1-speech.ckpt/content"; source_config="bsrnn-large-dnr-ps-vox7-speech"; stems=["speech"]
+[[checkpoints]]
+key="v1-lstm12-vox7-music"; backend="v1"; variant="single-lstm12-vox7"; filename="dnr-bsrnn-lstm12-vox7-l1-music.ckpt"; size=310241347; md5="b70e7074b0d8efbe92a84c0f15330526"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-bsrnn-lstm12-vox7-l1-music.ckpt/content"; source_config="bsrnn-large-dnr-ps-vox7-music"; stems=["music"]
+[[checkpoints]]
+key="v1-lstm12-vox7-effects"; backend="v1"; variant="single-lstm12-vox7"; filename="dnr-bsrnn-lstm12-vox7-l1-effects.ckpt"; size=310243971; md5="c575201c73492586e15bb12351651e72"; sha256=""; url="https://zenodo.org/api/records/10160698/files/dnr-bsrnn-lstm12-vox7-l1-effects.ckpt/content"; source_config="bsrnn-large-dnr-ps-vox7-effects"; stems=["effects"]
+[[checkpoints]]
+key="v2-cmn"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-cmn.ckpt"; size=446680129; md5="8e57ed0ad89217342482d74ddefa4f25"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-cmn.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v2-deu"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-deu.ckpt"; size=446680129; md5="899dba0f7d4ead63f2c11d1ba45b3387"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-deu.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v2-eng"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-eng.ckpt"; size=446680129; md5="9b74787e7f752709ce986ba1b1ac29a9"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-eng.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v2-fao"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-fao.ckpt"; size=446680129; md5="66c1a2e595e1fab3962b6f28d9e8b2fa"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-fao.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v2-fra"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-fra.ckpt"; size=446680129; md5="60613898c0700f7c5aa64012cfa37bca"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-fra.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v2-spa"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-spa.ckpt"; size=446680129; md5="f724266793e1a4f6f76a8bb527e1c7c9"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-spa.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+[[checkpoints]]
+key="v2-multi"; backend="v2"; variant="bandit-mus64"; filename="checkpoint-multi.ckpt"; size=446680129; md5="fea2868787551b0cff36cfcf7c3622a3"; sha256=""; url="https://zenodo.org/api/records/12701995/files/checkpoint-multi.ckpt/content"; source_config="bandit-mus64"; stems=["speech","music","effects"]
+
+[checkpoint_defaults]
+v1_native_sample_rate = 44100
+v2_native_sample_rate = 48000
+v1_source_revision = "840d5eb9ede59d64569c423244547e58cb00f647"
+v2_source_revision = "d5563d9031e95fdaa3e5a73d5020b9a0df61adb6"
+v1_license = "CC-BY-NC-4.0"
+v2_license = "CC-BY-SA-4.0"
+updated = "2026-07-22"
