@@ -1,12 +1,34 @@
-"""Guarded command placeholder for the stem-by-stem v1 parity gate.
+"""Compare every public v1 Music64 stem with an untouched-upstream fixture.
 
-Reads: caller fixture argument only until the independent v1 graph is ported.
+The fixture records its upstream torch/device environment. This command uses a
+caller-local official checkpoint, never downloads or bundles it. Reads:
+fixture, checkpoint, and the public BanditSession.
 """
 
 from __future__ import annotations
 import argparse
+import hashlib
+from pathlib import Path
+
+import numpy as np
+
+from bandit_infer import BanditSession
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--fixture", required=True)
+parser.add_argument("--fixture", type=Path, required=True)
+parser.add_argument("--checkpoint", type=Path, required=True)
+parser.add_argument("--device", default="cuda")
 args = parser.parse_args()
-raise SystemExit("v1 parity is blocked: no untouched-upstream fixture or faithful v1 backend")
+
+fixture = np.load(args.fixture)
+digest = hashlib.file_digest(args.checkpoint.open("rb"), "sha256").hexdigest()
+with BanditSession(
+    "v1-mus64-l1snr",
+    device=args.device,
+    checkpoint_path=args.checkpoint,
+    checkpoint_sha256=digest,
+) as session:
+    estimates = session.infer(fixture["audio"], sample_rate=44100)
+for stem in ("speech", "music", "effects"):
+    np.testing.assert_allclose(estimates[stem], fixture[stem], rtol=3e-5, atol=3e-6)
+print("v1 Music64 parity passed: every CASS stem is within rtol=3e-5, atol=3e-6")

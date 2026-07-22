@@ -22,8 +22,9 @@ def test_complete_registry_and_native_rates() -> None:
     assert {spec.sample_rate for spec in specs.values() if spec.backend == "v1"} == {44100}
     assert {spec.sample_rate for spec in specs.values() if spec.backend == "v2"} == {48000}
     assert all(spec.md5 for spec in specs.values())
+    assert specs["v1-mus64-l1snr"].sha256 == "16c52a45c891fe44bccc27d2b8403398ce8dafa1df0300a0883ec316d10c21d4"
     assert specs["v2-multi"].sha256 == "abcfccf65446752a057f4a302c941479a54b7560ebf8d7bca039d2ea98e64cfc"
-    assert all(not spec.sha256 for key, spec in specs.items() if key != "v2-multi")
+    assert all(not spec.sha256 for key, spec in specs.items() if key not in {"v1-mus64-l1snr", "v2-multi"})
     assert all(spec.stems == ("speech", "music", "effects") or len(spec.stems) == 1 for spec in specs.values())
 
 
@@ -42,7 +43,7 @@ def test_cache_info_uses_resolver_candidate_without_materializing(tmp_path: Path
 
 def test_official_unverified_download_is_rejected() -> None:
     with pytest.raises(CheckpointConfigError, match="sha256"):
-        resolve_checkpoint(get_spec())
+        resolve_checkpoint(get_spec("v1-mus48-l1snr"))
 
 
 def test_direct_path_requires_matching_sha256(tmp_path: Path) -> None:

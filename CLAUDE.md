@@ -7,13 +7,12 @@ Watcharasupat and collaborators' Apache-2.0 v1/v2 repositories and never
 bundles, converts, or rehosts their weights. The v1 official Zenodo weights are
 CC-BY-NC-4.0; v2 weights are CC-BY-SA-4.0.
 
-The initial catalog accurately lists 28 intended artifacts (21 v1 Bandit and
-seven v2) but Zenodo publishes only MD5 metadata. Each entry deliberately has
-an empty SHA-256 and automatic official loading is disabled. Do not fill these
-values from guesses, filenames, or a different artifact. A model becomes
-supported only after a local official download is SHA-256 hashed, strict-loaded
-against the correct independent graph, and compared stem-by-stem to an
-untouched-upstream golden fixture.
+The catalog accurately lists 28 intended artifacts (21 v1 Bandit and seven
+v2). Zenodo publishes only MD5 metadata. `v1-mus64-l1snr` and `v2-multi` have
+independently computed SHA-256 values, strict-load their independent graphs,
+and pass stem-by-stem fixtures from untouched upstream implementations. All
+other entries deliberately retain empty SHA-256 values. Do not fill these
+values from guesses, filenames, or a different artifact.
 
 ## Layout and conventions
 
@@ -31,9 +30,9 @@ uv run pytest -q
 uv run python -m build
 uv run python tools/verify_inference_only.py
 uv run python tools/verify_wheel.py
-uv run python tools/generate_v1_upstream_fixture.py --fixture tests/fixtures/v1-mus64.npz
-uv run python tools/verify_v1_upstream_parity.py --fixture tests/fixtures/v1-mus64.npz
-uv run python tools/generate_v2_upstream_fixture.py --fixture tests/fixtures/v2-multi.npz
+uv run python tools/generate_v1_upstream_fixture.py --fixture tests/fixtures/v1-mus64-upstream.npz --checkpoint /path/to/dnr-3s-mus64-l1snr.ckpt --upstream-root /path/to/untouched/bandit-v1 --python /path/to/upstream-python --device cuda
+uv run python tools/verify_v1_upstream_parity.py --fixture tests/fixtures/v1-mus64-upstream.npz --checkpoint /path/to/dnr-3s-mus64-l1snr.ckpt --device cuda
+uv run python tools/generate_v2_upstream_fixture.py --fixture tests/fixtures/v2-multi-upstream.npz --checkpoint /path/to/checkpoint-multi.ckpt --upstream-root /path/to/untouched/bandit-v2 --python /path/to/upstream-python --device cuda
 uv run python tools/verify_v2_upstream_parity.py --fixture tests/fixtures/v2-multi-upstream.npz --checkpoint /path/to/checkpoint-multi.ckpt --device cuda
 uv run python tools/verify_checkpoint_compatibility.py --real
 uv run python -c "import bandit_infer; print(bandit_infer.__version__); print(bandit_infer.BanditSession)"
@@ -41,7 +40,9 @@ git status --short
 git log --oneline --decorate -10
 ```
 
-The package tests, build, inference-only scan, wheel check, and v2 parity
-command now pass when supplied the recorded official v2 multi checkpoint. v1
-fixture/parity and the all-family real compatibility command remain failing
-gates until a v1 official checkpoint has been recorded and verified.
+The package tests, build, inference-only scan, wheel check, v1 Music64 parity,
+and v2 Multi parity commands pass when supplied the recorded official
+checkpoints. Fixture generation is run from a separately provisioned
+environment against untouched upstream source; it is intentionally not a
+package runtime dependency. The all-family real compatibility command remains
+an open gate because the remaining 26 official checkpoint bytes are unverified.
