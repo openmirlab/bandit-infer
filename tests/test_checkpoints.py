@@ -21,7 +21,9 @@ def test_complete_registry_and_native_rates() -> None:
     assert sum(spec.backend == "v2" for spec in specs.values()) == 7
     assert {spec.sample_rate for spec in specs.values() if spec.backend == "v1"} == {44100}
     assert {spec.sample_rate for spec in specs.values() if spec.backend == "v2"} == {48000}
-    assert all(spec.md5 and not spec.sha256 for spec in specs.values())
+    assert all(spec.md5 for spec in specs.values())
+    assert specs["v2-multi"].sha256 == "abcfccf65446752a057f4a302c941479a54b7560ebf8d7bca039d2ea98e64cfc"
+    assert all(not spec.sha256 for key, spec in specs.items() if key != "v2-multi")
     assert all(spec.stems == ("speech", "music", "effects") or len(spec.stems) == 1 for spec in specs.values())
 
 

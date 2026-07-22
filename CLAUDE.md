@@ -34,13 +34,14 @@ uv run python tools/verify_wheel.py
 uv run python tools/generate_v1_upstream_fixture.py --fixture tests/fixtures/v1-mus64.npz
 uv run python tools/verify_v1_upstream_parity.py --fixture tests/fixtures/v1-mus64.npz
 uv run python tools/generate_v2_upstream_fixture.py --fixture tests/fixtures/v2-multi.npz
-uv run python tools/verify_v2_upstream_parity.py --fixture tests/fixtures/v2-multi.npz
+uv run python tools/verify_v2_upstream_parity.py --fixture tests/fixtures/v2-multi-upstream.npz --checkpoint /path/to/checkpoint-multi.ckpt --device cuda
 uv run python tools/verify_checkpoint_compatibility.py --real
 uv run python -c "import bandit_infer; print(bandit_infer.__version__); print(bandit_infer.BanditSession)"
 git status --short
 git log --oneline --decorate -10
 ```
 
-The first five and import command are expected to pass at this stage. The four
-real-model commands are intentionally explicit failing gates until their
-required backend/fixture/checkpoint inputs exist; do not report them as passed.
+The package tests, build, inference-only scan, wheel check, and v2 parity
+command now pass when supplied the recorded official v2 multi checkpoint. v1
+fixture/parity and the all-family real compatibility command remain failing
+gates until a v1 official checkpoint has been recorded and verified.

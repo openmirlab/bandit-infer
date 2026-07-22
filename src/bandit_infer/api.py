@@ -28,10 +28,13 @@ class _Backend(Protocol):
 
 def load_runtime_backend(spec: CheckpointSpec, checkpoint: Path, device: torch.device) -> _Backend:
     """Select an independent backend; never use a shared model architecture."""
-    raise RuntimeUnavailableError(
-        f"{spec.key} ({spec.backend}/{spec.variant}) is catalogued but its faithful "
-        "model graph and real-checkpoint parity have not yet been verified"
-    )
+    if spec.backend == "v2":
+        from ._v2.runtime import V2Runtime
+        return V2Runtime(checkpoint, device)
+    if spec.backend == "v1":
+        from ._v1.runtime import V1Runtime
+        return V1Runtime(spec, checkpoint, device)
+    raise RuntimeUnavailableError(f"unknown backend {spec.backend}")
 
 
 class BanditSession:
