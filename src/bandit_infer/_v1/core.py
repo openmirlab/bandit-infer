@@ -8,7 +8,9 @@ from . import BandsplitCoreBase
 from .bandsplit import BandSplitModule
 from .maskestim import (
     MaskEstimationModule,
-    OverlappingMaskEstimationModule
+    MultAddMaskEstimationModule,
+    OverlappingMaskEstimationModule,
+    PatchingMaskEstimationModule,
 )
 from .tfmodel import (
     ConvolutionalTimeFreqModule,

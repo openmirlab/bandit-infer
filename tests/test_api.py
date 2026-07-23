@@ -48,7 +48,8 @@ def test_ready_only_no_reload_release_close_and_context(monkeypatch: pytest.Monk
     assert session.status == "released"
     session.load()
     assert calls["loads"] == 2
-    session.close(); session.close()
+    session.close()
+    session.close()
     assert session.status == "closed"
     with pytest.raises(RuntimeError, match="closed"):
         session.load()

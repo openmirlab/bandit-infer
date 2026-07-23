@@ -1,4 +1,3 @@
-import warnings
 from typing import Dict, List, Optional, Tuple, Type
 
 import torch
@@ -302,6 +301,59 @@ class OverlappingMaskEstimationModule(MaskEstimationModuleBase):
             masks[:, :, fstart:fend, :] += mask
 
         return masks
+
+
+class MultAddMaskEstimationModule(OverlappingMaskEstimationModule):
+    """Overlapping mask estimator that emits multiplicative and additive masks."""
+
+    def __init__(self, **kwargs) -> None:
+        super().__init__(norm_mlp_cls=MultAddNormMLP, **kwargs)
+
+    def forward(self, q, cond=None):
+        batch, n_bands, n_time, _ = q.shape
+
+        if cond is not None:
+            if cond.ndim == 2:
+                cond = cond[:, None, None, :].expand(-1, n_bands, n_time, -1)
+            elif cond.ndim == 3:
+                assert cond.shape[1] == n_time
+                cond = cond[:, None, :, :].expand(-1, n_bands, -1, -1)
+            else:
+                raise ValueError(f"Invalid cond shape: {cond.shape}")
+            q = torch.cat([q, cond], dim=-1)
+        elif self.cond_dim > 0:
+            cond = torch.ones(
+                (batch, n_bands, n_time, self.cond_dim),
+                device=q.device,
+                dtype=q.dtype,
+            )
+            q = torch.cat([q, cond], dim=-1)
+
+        mask_pairs = self.compute_masks(q)
+        masks = torch.zeros(
+            (batch, self.in_channel, self.n_freq, n_time, 2),
+            device=q.device,
+            dtype=mask_pairs[0][0].dtype,
+        )
+
+        for index, (multiplicative, additive) in enumerate(mask_pairs):
+            fstart, fend = self.band_specs[index]
+            if self.use_freq_weights:
+                freq_weight = self.get_buffer(f"freq_weights/{index}")[:, None]
+                multiplicative = multiplicative * freq_weight
+                additive = additive * freq_weight
+            masks[:, :, fstart:fend, :, 0] += multiplicative
+            masks[:, :, fstart:fend, :, 1] += additive
+
+        return masks
+
+
+class PatchingMaskEstimationModule(nn.Module):
+    """Unsupported upstream v1 patching-mask estimator placeholder."""
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__()
+        raise NotImplementedError("Bandit v1 patching-mask checkpoints are not graph-verified yet")
 
 
 class MaskEstimationModule(OverlappingMaskEstimationModule):

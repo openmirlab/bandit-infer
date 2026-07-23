@@ -9,7 +9,7 @@ Reads: checkpoints, device, and backend-specific namespaces lazily.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Callable, Protocol
+from typing import Protocol
 
 import numpy as np
 import torch

@@ -1,10 +1,36 @@
 import os
 from abc import abstractmethod
-from typing import Any, Callable
+from typing import Callable
 
 import numpy as np
 import torch
 from torch import Tensor
+
+
+def hz2bark(hz):
+    hz = torch.as_tensor(hz, dtype=torch.float32)
+    return 6 * torch.asinh(hz / 600)
+
+
+def hz2erb(hz):
+    hz = torch.as_tensor(hz, dtype=torch.float32)
+    return 21.4 * torch.log10(1 + 0.00437 * hz)
+
+
+def _hz_to_mel(hz):
+    hz = torch.as_tensor(hz, dtype=torch.float32)
+    return 2595.0 * torch.log10(1.0 + hz / 700.0)
+
+
+def _mel_to_hz(mel):
+    return 700.0 * (torch.pow(10.0, mel / 2595.0) - 1.0)
+
+
+def _create_triangular_filterbank(all_freqs: Tensor, f_pts: Tensor) -> Tensor:
+    slopes = f_pts.unsqueeze(0) - all_freqs.unsqueeze(1)
+    down_slopes = -slopes[:, :-2] / (f_pts[1:-1] - f_pts[:-2])
+    up_slopes = slopes[:, 2:] / (f_pts[2:] - f_pts[1:-1])
+    return torch.maximum(torch.zeros(1, dtype=all_freqs.dtype), torch.minimum(down_slopes, up_slopes))
 
 
 def hz_to_midi(hz):
@@ -354,13 +380,12 @@ class PerceptualBandsplitSpecification(BandsplitSpecification):
             )
 
 def mel_filterbank(n_bands, fs, f_min, f_max, n_freqs):
-    fb = taF.melscale_fbanks(
-                n_mels=n_bands,
-                sample_rate=fs,
-                f_min=f_min,
-                f_max=f_max,
-                n_freqs=n_freqs,
-        ).T
+    all_freqs = torch.linspace(0, fs // 2, n_freqs)
+    m_min = _hz_to_mel(f_min)
+    m_max = _hz_to_mel(f_max)
+    m_pts = torch.linspace(m_min, m_max, n_bands + 2)
+    f_pts = _mel_to_hz(m_pts)
+    fb = _create_triangular_filterbank(all_freqs, f_pts).T
 
     fb[0, 0] = 1.0
 
@@ -428,17 +453,7 @@ class MusicalBandsplitSpecification(PerceptualBandsplitSpecification):
 def bark_filterbank(
     n_bands, fs, f_min, f_max, n_freqs
 ):
-    nfft = 2 * (n_freqs -1)
-    fb, _ = bark_fbanks.bark_filter_banks(
-            nfilts=n_bands,
-            nfft=nfft,
-            fs=fs,
-            low_freq=f_min,
-            high_freq=f_max,
-            scale="constant"
-    )
-
-    return torch.as_tensor(fb)
+    return triangular_bark_filterbank(n_bands, fs, f_min, f_max, n_freqs)
 
 class BarkBandsplitSpecification(PerceptualBandsplitSpecification):
     def __init__(
