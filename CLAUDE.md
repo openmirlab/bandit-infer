@@ -123,6 +123,20 @@ assumed from source reading).
   for the with/without numbers. Applied unconditionally regardless of the
   measurement, per the org's standing cheap-insurance policy.
 
+## Testing philosophy
+
+Offline unit/regression tests run by default (`addopts = "-m 'not
+realweights'"`); the `realweights` marker covers anything needing a real,
+locally cached official checkpoint (never downloaded by the tests
+themselves) and, for MLX, the `[mlx]` extra plus an arm64 interpreter --
+`test_mlx_parity.py` skips silently rather than fails when either is
+missing, so a green default run says nothing about MLX or MPS correctness.
+Confirm `python -c "import platform; print(platform.machine())"` says
+`arm64` before trusting a realweights run. Upstream parity (the
+`verify_*_upstream_parity.py` tools below) is the accuracy gate proper: it
+compares this package's output against an untouched upstream checkout, not
+just against itself.
+
 ## Required verification
 
 ```bash
