@@ -1,3 +1,15 @@
+"""v1 band-boundary-specification engine: the `BandsplitSpecification` hierarchy.
+
+Despite the handful of Hz-conversion helpers at the top of the file, the
+file's real job is `BandsplitSpecification` and its subclasses (Vocal, Bass,
+Drum, Mel, Musical, Bark, TriangularBark, MiniBark, EquivalentRectangular) --
+every v1 variant resolves its per-band frequency ranges through this
+hierarchy, faithfully ported from upstream v1. `.bandsplit`, `.maskestim`,
+and `.wrapper` all depend on it for `band_widths_from_specs`/`check_no_gap`/
+`check_no_overlap`/`check_nonzero_bandwidth` and the spec classes themselves.
+Reads: numpy and torch only.
+"""
+
 import os
 from abc import abstractmethod
 from typing import Callable

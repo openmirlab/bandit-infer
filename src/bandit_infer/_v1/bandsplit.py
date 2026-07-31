@@ -1,3 +1,12 @@
+"""Faithful v1 band-split front-end: per-band normalize + linear projection.
+
+A vendored-style port of upstream v1's band-split layer: `NormFC` normalizes
+and projects one band's flattened `(reim, band_width)` bins, and
+`BandSplitModule` applies one `NormFC` per band using the boundaries from
+`.utils`'s `BandsplitSpecification` hierarchy. `.core` wires this to the
+time-frequency backbone and mask-estimation head. Reads: torch, .utils.
+"""
+
 from typing import List, Tuple
 
 import torch

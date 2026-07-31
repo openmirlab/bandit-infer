@@ -1,3 +1,13 @@
+"""Faithful v1 model wrappers: spectral front-end + band-split/mask-estim core.
+
+A vendored-style port of upstream v1's wrapper layer: `get_band_specs`/
+`get_band_specs_map` resolve a band-spec name into boundaries via
+`.utils`'s `BandsplitSpecification` hierarchy, and the `*MultiSourceBandSplit*`
+classes combine `.spectral`'s STFT front-end with `.core`'s band-split/
+mask-estimation graphs into the checkpoint-loadable top-level modules. Reads:
+torch, .spectral, .utils, .core.
+"""
+
 from typing import Dict, List, Optional, Tuple, Union
 
 import torch

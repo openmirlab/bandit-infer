@@ -1,3 +1,13 @@
+"""Faithful v1 time-frequency backbones: RNN, Transformer, and Conv variants.
+
+A vendored-style port of upstream v1's sequence-modelling layer:
+`SeqBandModellingModule` (RNN), `TransformerTimeFreqModule`, and
+`ConvolutionalTimeFreqModule` each subclass `TimeFrequencyModellingModule`
+and model temporal/band structure between `.bandsplit`'s front-end and
+`.maskestim`'s mask heads; only the RNN variant is registry-verified (see
+CLAUDE.md). Reads: torch only.
+"""
+
 import warnings
 
 import torch

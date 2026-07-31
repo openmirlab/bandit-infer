@@ -1,3 +1,13 @@
+"""Faithful v2 time-frequency backbone: the RNN sequence-modelling module.
+
+A vendored-style port of upstream v2's sequence-modelling layer,
+independent from `_v1/tfmodel.py` (re-implemented, not shared, per
+CLAUDE.md): `SeqBandModellingModule` subclasses
+`TimeFrequencyModellingModule` and models temporal/band structure between
+`.bandsplit`'s front-end and `.maskestim`'s mask heads; this is the one
+registry-verified variant (v2-multi). Reads: torch only.
+"""
+
 import warnings
 
 import torch

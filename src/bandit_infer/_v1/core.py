@@ -1,3 +1,13 @@
+"""Faithful v1 band-split/mask-estimation core graphs (RNN, Transformer, Conv).
+
+A vendored-style port of upstream v1's core layer: each `*BandSplitCore*`
+class wires `.bandsplit`'s `BandSplitModule` to a `.tfmodel` time-frequency
+backbone and a `.maskestim` mask-estimation head, subclassing `BandsplitCoreBase`
+for the shared forward contract. `.wrapper` adds the spectral front-end on
+top of these. Reads: torch, package `__init__` (BandsplitCoreBase),
+.bandsplit, .maskestim, .tfmodel.
+"""
+
 from typing import Dict, List, Optional, Tuple
 
 import torch

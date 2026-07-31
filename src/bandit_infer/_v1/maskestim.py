@@ -1,3 +1,13 @@
+"""Faithful v1 mask-estimation heads (per-band MLPs producing source masks).
+
+A vendored-style port of upstream v1's mask-estimation layer: `NormMLP` and
+its variants normalize and project each band's hidden features back out,
+and `OverlappingMaskEstimationModule`/`MaskEstimationModule`/
+`PatchingMaskEstimationModule` assemble those per-band MLPs against the
+band boundaries from `.utils`'s `BandsplitSpecification` hierarchy.
+`.core` wires this to the time-frequency backbone. Reads: torch, .utils.
+"""
+
 from typing import Dict, List, Optional, Tuple, Type
 
 import torch

@@ -1,3 +1,13 @@
+"""Faithful v2 mask-estimation heads (per-band MLPs producing source masks).
+
+A vendored-style port of upstream v2's mask-estimation layer, independent
+from `_v1/maskestim.py` (see CLAUDE.md's "`_v1` and `_v2` own separate
+model graphs" rule): `NormMLP` and its variants normalize and project each
+band's hidden features, and `OverlappingMaskEstimationModule`/
+`MaskEstimationModule` assemble those per-band MLPs against the boundaries
+from `.utils`'s `BandsplitSpecification` hierarchy. Reads: torch, .utils.
+"""
+
 from typing import Dict, List, Optional, Tuple, Type
 
 import torch
