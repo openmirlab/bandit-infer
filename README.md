@@ -70,12 +70,7 @@ catalog entry never implies that an unverified checkpoint can load.
 pip install bandit-infer
 ```
 
-For development, use `uv sync --all-extras --dev`. On Apple Silicon, both `uv`
-itself and the Python interpreter it resolves must be native `arm64` builds --
-an x86_64 (Rosetta) interpreter reports `torch.backends.mps.is_available()` as
-`False`, so the MPS path looks absent rather than misconfigured. Verify with
-`python -c "import platform; print(platform.machine())"` (expect `arm64`)
-before assuming MPS is unavailable.
+For development, use `uv sync --all-extras --dev`.
 
 ## Catalog and usage
 
@@ -97,18 +92,24 @@ has no recorded parity evidence. Multi-channel arrays are shaped
 `(channels, samples)`; v1 runs channels independently, while v2 retains its
 native tensor-handler behavior.
 
-## MLX backend (Apple Silicon)
+## Backends and devices
 
-An optional, additive MLX compute path -- native execution on Apple Silicon,
-alongside the default Torch path. There is no upstream MLX implementation of
-Bandit, so both `_v1` and `_v2` graphs are ported from scratch directly from
-this package's own Torch source (`src/bandit_infer/mlx/v1/`,
-`src/bandit_infer/mlx/v2/`), not vendored from a third-party MLX project the
-way this org's other MLX backends are.
+Two independent choices, plus `family=` (see "Catalog and usage" above):
 
-```bash
-pip install 'bandit-infer[mlx]'
-```
+| Argument | Values | Meaning |
+|---|---|---|
+| `backend` | `torch` (default), `mlx`, `auto` | which framework computes |
+| `device` | `auto`, `cpu`, `cuda`, `cuda:N`, `mps` | where Torch computes |
+
+`backend=` selects the *compute framework* -- a separate axis from `family=`
+(the v1/v2 model architecture, renamed from an earlier `backend=` to free
+this name for its org-wide meaning -- see `CHANGELOG.md`) and from `device=`
+(where a Torch backend runs). This is the same two-axis shape six sibling
+OpenMIRLab packages use. `backend="mlx"` owns its own Apple Silicon execution
+and accepts only `device="auto"` or `device="mps"`, refusing anything else
+rather than ignoring it (a Torch-only value like `"cuda"` raises rather than
+being silently ignored); requesting `backend="mlx"` without the `[mlx]`
+extra installed also raises rather than falling back to Torch.
 
 ```python
 from bandit_infer import BanditSession
@@ -117,15 +118,23 @@ with BanditSession("v1-mus64-l1snr", backend="mlx") as session:
     stems = session.infer(audio, sample_rate=44100)
 ```
 
-`backend=` selects the *compute framework* (`"torch"` default, `"mlx"`, or
-`"auto"`) -- a separate axis from `family=` (the v1/v2 model architecture,
-renamed from an earlier `backend=` -- see `CHANGELOG.md`) and from `device=`
-(where a Torch backend runs). This is the same two-axis shape six sibling
-OpenMIRLab packages use. `backend="mlx"` accepts only `device="auto"` or
-`device="mps"` and refuses anything else (a Torch-only value like `"cuda"`
-raises rather than being silently ignored); requesting `backend="mlx"`
-without the `[mlx]` extra installed also raises rather than falling back to
-Torch.
+There is no `--backend` CLI flag yet (`bandit-infer`'s CLI is catalog-only:
+`--model`, `--list-models`) -- the compute-framework switch is Python-API-only
+for now.
+
+### The MLX backend
+
+An optional, additive MLX compute path -- native execution on Apple Silicon,
+alongside the default Torch path. There is no upstream MLX implementation of
+Bandit, so both `_v1` and `_v2` graphs are ported from scratch directly from
+this package's own Torch source (`src/bandit_infer/mlx/v1/`,
+`src/bandit_infer/mlx/v2/`), not vendored from a third-party MLX project the
+way this org's other MLX backends are. Install it with the extra, which is
+never part of the core install:
+
+```bash
+pip install 'bandit-infer[mlx]'
+```
 
 Support covers exactly what the Torch v1/v2 runtimes construct for every
 registry entry: the RNN-based `SeqBandModellingModule` core (every one of
@@ -140,6 +149,16 @@ SHA-256 values and can actually load -- the checkpoint gate in
 Measured Torch-vs-MLX parity through the public `BanditSession` API on real
 audio, including a zero-padded and a near-silent tail (Apple Silicon,
 2026-07-31): see `CHANGELOG.md`'s MLX entry for the recorded numbers.
+
+MPS and MLX both need an **arm64 Python interpreter**. Under Rosetta/x86_64
+they report as unavailable rather than failing loudly -- an x86_64
+interpreter makes `torch.backends.mps.is_available()` return `False`, and
+MLX fails to run correctly, so an accelerated path just looks absent rather
+than misconfigured. This is easy to hit without noticing: an x86_64 `uv`
+resolves x86_64 interpreters, so `uv sync` can silently produce an
+environment where the accelerated paths structurally cannot exist. Check
+with `python -c "import platform; print(platform.machine())"` -- it must
+print `arm64`.
 
 ## Weights and cache
 
