@@ -5,7 +5,7 @@
 Provide `bandit-infer`, an inference-only Python package for two independent
 upstream Bandit code lines: Bandit v1 (`840d5eb9ede59d64569c423244547e58cb00f647`)
 and Bandit v2 (`d5563d9031e95fdaa3e5a73d5020b9a0df61adb6`). The package must
-not convert checkpoints or share model layers between these backends.
+not convert checkpoints or share model layers between these families.
 
 ## Grounded inventory
 

@@ -137,6 +137,15 @@
   D8 for the evidence-driven reasoning behind treating `auto` and explicit
   `mps` as separate contracts.
 
+### Housekeeping
+
+- Deleted dead code (`_v2/film.py`, a commented-out bark/erb filterbank
+  block in `_v2/utils.py`), corrected stale headers (`_v2/__init__.py`'s
+  claim that v2 has no verified runtime; `mlx/__init__.py`'s pre-rename
+  `device="mlx"` reference), and added module docstrings to the nine
+  upstream-ported files that had none, including the package's four
+  largest. No behaviour changed.
+
 ## 0.1.0 - 2026-07-22
 
 - Added the initial inference-only package boundary, registry, cache resolver,
