@@ -55,8 +55,8 @@ def test_ready_only_no_reload_release_close_and_context(monkeypatch: pytest.Monk
         session.load()
 
 
-def test_backend_selection_is_not_an_alias() -> None:
-    assert BanditSession("v1-mus64-l1snr").spec.backend == "v1"
-    assert BanditSession("v2-multi").spec.backend == "v2"
-    with pytest.raises(ValueError, match="belongs to backend"):
-        BanditSession("v1-mus64-l1snr", backend="v2")
+def test_family_selection_is_not_an_alias() -> None:
+    assert BanditSession("v1-mus64-l1snr").spec.family == "v1"
+    assert BanditSession("v2-multi").spec.family == "v2"
+    with pytest.raises(ValueError, match="belongs to family"):
+        BanditSession("v1-mus64-l1snr", family="v2")

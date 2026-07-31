@@ -10,7 +10,7 @@ v2 = "https://zenodo.org/records/12701995"
 
 [[checkpoints]]
 key="v1-mus48-l1snr"
-backend="v1"
+family="v1"
 variant="multi-mus48"
 filename="dnr-3s-mus48-l1snr.ckpt"
 size=404244083
@@ -21,7 +21,7 @@ source_config="bsrnn-small-dnr-multi-mus48"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-bark48-l1snr"
-backend="v1"
+family="v1"
 variant="multi-bark48"
 filename="dnr-3s-bark48-l1snr.ckpt"
 size=775537139
@@ -32,7 +32,7 @@ source_config="bsrnn-small-dnr-multi-bark48"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-erb48-l1snr"
-backend="v1"
+family="v1"
 variant="multi-erb48"
 filename="dnr-3s-erb48-l1snr.ckpt"
 size=393210291
@@ -43,7 +43,7 @@ source_config="bsrnn-small-dnr-multi-erb48"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-mel48-l1snr"
-backend="v1"
+family="v1"
 variant="multi-mel48"
 filename="dnr-3s-mel48-l1snr.ckpt"
 size=394672243
@@ -54,7 +54,7 @@ source_config="bsrnn-small-dnr-multi-mel48"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-vox7-l2"
-backend="v1"
+family="v1"
 variant="multi-vox7"
 filename="dnr-3s-vox7-l2.ckpt"
 size=309531963
@@ -65,7 +65,7 @@ source_config="bsrnn-small-dnr-multi-vox7"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-tribark48-l1snr"
-backend="v1"
+family="v1"
 variant="multi-tribark48"
 filename="dnr-3s-tribark48-l1snr.ckpt"
 size=393667827
@@ -76,7 +76,7 @@ source_config="bsrnn-small-dnr-multi-tbark48"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-mus64-l1snr"
-backend="v1"
+family="v1"
 variant="multi-mus64"
 filename="dnr-3s-mus64-l1snr.ckpt"
 size=446386115
@@ -87,7 +87,7 @@ source_config="bsrnn-small-dnr-multi-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-vox7-l1snr"
-backend="v1"
+family="v1"
 variant="multi-vox7"
 filename="dnr-3s-vox7-l1snr.ckpt"
 size=309531899
@@ -98,7 +98,7 @@ source_config="bsrnn-small-dnr-multi-vox7"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-tribark64-l1snr"
-backend="v1"
+family="v1"
 variant="multi-tribark64"
 filename="dnr-3s-tribark64-l1snr.ckpt"
 size=434037763
@@ -109,7 +109,7 @@ source_config="bsrnn-small-dnr-multi-tbark64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-erb64-l1snr"
-backend="v1"
+family="v1"
 variant="multi-erb64"
 filename="dnr-3s-erb64-l1snr.ckpt"
 size=433648131
@@ -120,7 +120,7 @@ source_config="bsrnn-small-dnr-multi-erb64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-bark64-l1snr"
-backend="v1"
+family="v1"
 variant="multi-bark64"
 filename="dnr-3s-bark64-l1snr.ckpt"
 size=993738115
@@ -131,7 +131,7 @@ source_config="bsrnn-small-dnr-multi-bark64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-mus64-l1snr-plus"
-backend="v1"
+family="v1"
 variant="multi-mus64"
 filename="dnr-3s-mus64-l1snr-plus.ckpt"
 size=446403715
@@ -142,7 +142,7 @@ source_config="bsrnn-small-dnr-multi-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-mel64-l1snr"
-backend="v1"
+family="v1"
 variant="multi-mel64"
 filename="dnr-3s-mel64-l1snr.ckpt"
 size=582296643
@@ -153,7 +153,7 @@ source_config="bsrnn-small-dnr-multi-mel64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-vox7-l1"
-backend="v1"
+family="v1"
 variant="multi-vox7"
 filename="dnr-3s-vox7-l1.ckpt"
 size=311648954
@@ -164,7 +164,7 @@ source_config="bsrnn-small-dnr-multi-vox7"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-vox7-l2snr"
-backend="v1"
+family="v1"
 variant="multi-vox7"
 filename="dnr-3s-vox7-l2snr.ckpt"
 size=309531899
@@ -175,7 +175,7 @@ source_config="bsrnn-small-dnr-multi-vox7"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v1-gru8-vox7-speech"
-backend="v1"
+family="v1"
 variant="single-gru8-vox7"
 filename="dnr-bsrnn-gru8-vox7-l1-speech.ckpt"
 size=189972555
@@ -186,7 +186,7 @@ source_config="bsrnn-small-dnr-ps-vox7-speech"
 stems=["speech"]
 [[checkpoints]]
 key="v1-gru8-vox7-music"
-backend="v1"
+family="v1"
 variant="single-gru8-vox7"
 filename="dnr-bsrnn-gru8-vox7-l1-music.ckpt"
 size=189971339
@@ -197,7 +197,7 @@ source_config="bsrnn-small-dnr-ps-vox7-music"
 stems=["music"]
 [[checkpoints]]
 key="v1-gru8-vox7-effects"
-backend="v1"
+family="v1"
 variant="single-gru8-vox7"
 filename="dnr-bsrnn-gru8-vox7-l1-effects.ckpt"
 size=189973707
@@ -208,7 +208,7 @@ source_config="bsrnn-small-dnr-ps-vox7-effects"
 stems=["effects"]
 [[checkpoints]]
 key="v1-lstm12-vox7-speech"
-backend="v1"
+family="v1"
 variant="single-lstm12-vox7"
 filename="dnr-bsrnn-lstm12-vox7-l1-speech.ckpt"
 size=310242691
@@ -219,7 +219,7 @@ source_config="bsrnn-large-dnr-ps-vox7-speech"
 stems=["speech"]
 [[checkpoints]]
 key="v1-lstm12-vox7-music"
-backend="v1"
+family="v1"
 variant="single-lstm12-vox7"
 filename="dnr-bsrnn-lstm12-vox7-l1-music.ckpt"
 size=310241347
@@ -230,7 +230,7 @@ source_config="bsrnn-large-dnr-ps-vox7-music"
 stems=["music"]
 [[checkpoints]]
 key="v1-lstm12-vox7-effects"
-backend="v1"
+family="v1"
 variant="single-lstm12-vox7"
 filename="dnr-bsrnn-lstm12-vox7-l1-effects.ckpt"
 size=310243971
@@ -241,7 +241,7 @@ source_config="bsrnn-large-dnr-ps-vox7-effects"
 stems=["effects"]
 [[checkpoints]]
 key="v2-cmn"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-cmn.ckpt"
 size=446680129
@@ -252,7 +252,7 @@ source_config="bandit-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v2-deu"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-deu.ckpt"
 size=446680129
@@ -263,7 +263,7 @@ source_config="bandit-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v2-eng"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-eng.ckpt"
 size=446680129
@@ -274,7 +274,7 @@ source_config="bandit-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v2-fao"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-fao.ckpt"
 size=446680129
@@ -285,7 +285,7 @@ source_config="bandit-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v2-fra"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-fra.ckpt"
 size=446680129
@@ -296,7 +296,7 @@ source_config="bandit-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v2-spa"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-spa.ckpt"
 size=446680129
@@ -307,7 +307,7 @@ source_config="bandit-mus64"
 stems=["speech","music","effects"]
 [[checkpoints]]
 key="v2-multi"
-backend="v2"
+family="v2"
 variant="bandit-mus64"
 filename="checkpoint-multi.ckpt"
 size=446680129

@@ -17,10 +17,10 @@ from bandit_infer.checkpoints import CheckpointConfigError, ChecksumError, cache
 def test_complete_registry_and_native_rates() -> None:
     default, specs = load_manifest()
     assert default in specs and len(specs) == 28
-    assert sum(spec.backend == "v1" for spec in specs.values()) == 21
-    assert sum(spec.backend == "v2" for spec in specs.values()) == 7
-    assert {spec.sample_rate for spec in specs.values() if spec.backend == "v1"} == {44100}
-    assert {spec.sample_rate for spec in specs.values() if spec.backend == "v2"} == {48000}
+    assert sum(spec.family == "v1" for spec in specs.values()) == 21
+    assert sum(spec.family == "v2" for spec in specs.values()) == 7
+    assert {spec.sample_rate for spec in specs.values() if spec.family == "v1"} == {44100}
+    assert {spec.sample_rate for spec in specs.values() if spec.family == "v2"} == {48000}
     assert all(spec.md5 for spec in specs.values())
     assert specs["v1-mus64-l1snr"].sha256 == "16c52a45c891fe44bccc27d2b8403398ce8dafa1df0300a0883ec316d10c21d4"
     assert specs["v2-multi"].sha256 == "abcfccf65446752a057f4a302c941479a54b7560ebf8d7bca039d2ea98e64cfc"

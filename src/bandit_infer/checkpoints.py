@@ -30,7 +30,7 @@ class ChecksumError(ValueError):
 @dataclass(frozen=True)
 class CheckpointSpec:
     key: str
-    backend: str
+    family: str
     variant: str
     filename: str
     size: int
@@ -58,17 +58,17 @@ def load_manifest(path: Path | None = None) -> tuple[str, dict[str, CheckpointSp
         defaults = raw["checkpoint_defaults"]
         result: dict[str, CheckpointSpec] = {}
         for entry in raw["checkpoints"]:
-            backend = entry["backend"]
-            if backend not in {"v1", "v2"} or entry["key"] in result:
-                raise CheckpointConfigError("checkpoint key/backend is invalid or duplicated")
+            family = entry["family"]
+            if family not in {"v1", "v2"} or entry["key"] in result:
+                raise CheckpointConfigError("checkpoint key/family is invalid or duplicated")
             result[entry["key"]] = CheckpointSpec(
-                key=entry["key"], backend=backend, variant=entry["variant"],
+                key=entry["key"], family=family, variant=entry["variant"],
                 filename=entry["filename"], size=int(entry["size"]), md5=entry["md5"],
                 sha256=entry["sha256"], url=entry["url"], source_config=entry["source_config"],
                 stems=tuple(entry["stems"]),
-                sample_rate=int(defaults[f"{backend}_native_sample_rate"]),
-                license=defaults[f"{backend}_license"],
-                source_revision=defaults[f"{backend}_source_revision"], updated=defaults["updated"],
+                sample_rate=int(defaults[f"{family}_native_sample_rate"]),
+                license=defaults[f"{family}_license"],
+                source_revision=defaults[f"{family}_source_revision"], updated=defaults["updated"],
             )
     except (KeyError, TypeError, tomllib.TOMLDecodeError) as error:
         raise CheckpointConfigError(f"malformed checkpoints.toml: {error}") from error
