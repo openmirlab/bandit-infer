@@ -60,3 +60,10 @@ def test_family_selection_is_not_an_alias() -> None:
     assert BanditSession("v2-multi").spec.family == "v2"
     with pytest.raises(ValueError, match="belongs to family"):
         BanditSession("v1-mus64-l1snr", family="v2")
+
+
+def test_framework_backend_argument_is_not_public_api() -> None:
+    with pytest.raises(TypeError, match="unexpected keyword argument"):
+        BanditSession("v1-mus64-l1snr", **{"backend": "torch"})
+    with pytest.raises(TypeError, match="unexpected keyword argument"):
+        api.separate(np.zeros(8), sample_rate=44100, **{"backend": "torch"})
