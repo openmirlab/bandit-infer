@@ -31,24 +31,13 @@ def test_device_validation(monkeypatch: pytest.MonkeyPatch) -> None:
         resolve_device("tpu")
 
 
-def test_explicit_mps_resolves_when_available(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_explicit_mps_is_not_supported(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
-    monkeypatch.setattr("bandit_infer.device.mps_available", lambda: True)
-    assert resolve_device("mps") == torch.device("mps")
-
-
-def test_explicit_mps_raises_when_unavailable(monkeypatch: pytest.MonkeyPatch) -> None:
-    """An explicit accelerator is honoured or the call fails -- never downgraded."""
-    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
-    monkeypatch.setattr("bandit_infer.device.mps_available", lambda: False)
-    with pytest.raises(RuntimeError, match="explicitly requested"):
+    with pytest.raises(ValueError, match="device='mps' is not supported"):
         resolve_device("mps")
 
 
 def test_auto_never_promotes_to_mps(monkeypatch: pytest.MonkeyPatch) -> None:
-    """Legacy auto-selection is preserved: MPS is opt-in, so existing Mac callers
-    keep the exact compute path -- and the exact outputs -- they had before, even
-    when MPS is available on the machine running the test."""
+    """Legacy auto-selection is preserved: auto stays CUDA-else-CPU."""
     monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
-    monkeypatch.setattr("bandit_infer.device.mps_available", lambda: True)
     assert resolve_device("auto") == torch.device("cpu")

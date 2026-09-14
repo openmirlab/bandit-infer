@@ -4,8 +4,7 @@ A vendored-style port of upstream v2's band-split layer. Numerically
 distinct from `_v1/bandsplit.py` despite the near-identical class names:
 `BandSplitModule` here permutes to `(batch, n_time, in_chan, n_freq)` before
 flattening `(in_chan, band_width, reim)` (reim fastest-varying), vs. v1's
-`(reim, band_width)` order (see `mlx/v2/model.py`'s module docstring for the
-verified numeric diff). Band boundaries come from `.utils`'s
+`(reim, band_width)` order. Band boundaries come from `.utils`'s
 `BandsplitSpecification` hierarchy. Reads: torch, .utils.
 """
 

@@ -36,15 +36,6 @@ dependencies = ["numpy>=1.24", "torch>=2.0"]
 [project.optional-dependencies]
 audio = ["soundfile>=0.12"]
 dev = ["build>=1.2", "pytest>=8.0", "ruff>=0.5"]
-# Optional MLX backend (Apple Silicon). Kept out of the core install so a plain
-# `pip install bandit-infer` stays framework-light and importable everywhere;
-# `import bandit_infer` never imports mlx. Floors only, no ceilings: matches
-# every sibling OpenMIRLab package's identical extra (bs-roformer-infer,
-# melband-roformer-infer, mdxnet-infer, demucs-infer).
-mlx = [
-  "mlx>=0.31",
-  "mlx-spectro>=0.7",
-]
 
 [project.scripts]
 bandit-infer = "bandit_infer.cli:main"
@@ -63,9 +54,12 @@ packages = ["src/bandit_infer"]
 [tool.hatch.build.targets.wheel.force-include]
 "src/bandit_infer/config/checkpoints.toml" = "bandit_infer/config/checkpoints.toml"
 
+[tool.hatch.build.targets.sdist]
+exclude = ["/docs"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = [
-  "realweights: needs a real, locally cached official checkpoint and the [mlx] extra; deselected by default, run with -m realweights",
+  "realweights: needs a real, locally cached official checkpoint; deselected by default, run with -m realweights",
 ]
 addopts = "-m 'not realweights'"
