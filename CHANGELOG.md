@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Verified SHA-256 for every catalog checkpoint (2026-09-14)
+
+- Filled in `sha256` for the 26 `checkpoints.toml` entries that had it blank,
+  so all 28 official checkpoints now download and verify automatically. Each
+  value was computed from a fresh download of the official Zenodo file, and
+  written only after that file matched the catalog's recorded `size` and
+  Zenodo `md5`. No digest was copied from elsewhere.
+- This is an integrity claim, not a support claim: only `v1-mus64-l1snr` and
+  `v2-multi` have load and upstream parity evidence. The other 26 are not
+  load-tested.
+- `tests/test_checkpoints.py` now requires a 64-character lowercase hex
+  SHA-256 on every entry. The blank-SHA-256 download guard is now tested with
+  a synthesized spec instead of a real catalog key, so it stays covered.
+
 ### MLX backend (Apple Silicon), from-scratch port
 
 - Added an optional `[mlx]` extra with independent v1 and v2 MLX graphs

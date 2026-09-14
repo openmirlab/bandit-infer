@@ -8,11 +8,16 @@ bundles, converts, or rehosts their weights. The v1 official Zenodo weights are
 CC-BY-NC-4.0; v2 weights are CC-BY-SA-4.0.
 
 The catalog accurately lists 28 intended artifacts (21 v1 Bandit and seven
-v2). Zenodo publishes only MD5 metadata. `v1-mus64-l1snr` and `v2-multi` have
-independently computed SHA-256 values, strict-load their independent graphs,
-and pass stem-by-stem fixtures from untouched upstream implementations. All
-other entries deliberately retain empty SHA-256 values. Do not fill these
-values from guesses, filenames, or a different artifact.
+v2). Zenodo publishes only MD5 metadata. All 28 entries carry SHA-256 values
+computed from their official Zenodo downloads (2026-09-14 for the 26 added
+after the first two); each download was also confirmed to match the catalog's
+recorded Zenodo `size` and `md5` before its digest was written. That makes
+every entry byte-verified and safe for automatic download. It is a separate,
+weaker claim than support: only `v1-mus64-l1snr` and `v2-multi` strict-load
+their independent graphs and pass stem-by-stem fixtures from untouched
+upstream implementations. The other 26 are integrity-verified but carry no
+load or parity evidence. Never fill or change a SHA-256 value from guesses,
+filenames, or a different artifact -- only from hashing the official bytes.
 
 ## Layout and conventions
 

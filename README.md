@@ -60,9 +60,10 @@ implementations. Both return `speech`, `music`, and `effects` at their native
 sample rates. v1 direct inference processes each input channel independently;
 v2 follows its upstream chunked tensor handler.
 
-The other 26 catalog entries remain provenance records, not supported models:
-their official bytes have not yet been SHA-256 recorded and parity-tested. A
-catalog entry never implies that an unverified checkpoint can load.
+The other 26 catalog entries are not supported models. Their official bytes
+are SHA-256 recorded, so they download and verify automatically, but none has
+been load-tested or parity-tested. A verified digest proves you got the
+official file; it does not prove this package loads it correctly.
 
 ## Install
 
@@ -142,9 +143,9 @@ the 28 registry `variant` strings resolves to it -- v1's
 `TransformerTimeFreqModule`/`ConvolutionalTimeFreqModule` and v2's Wiener/
 non-`musical`-band paths are never reached by any checkpoint this package
 lists, so they are out of scope for the MLX port too). As with the Torch
-path, only `v1-mus64-l1snr` and `v2-multi` have independently verified
-SHA-256 values and can actually load -- the checkpoint gate in
-`checkpoints.py` applies identically regardless of backend.
+path, all 28 entries pass the SHA-256 checkpoint gate in `checkpoints.py`
+(which applies identically regardless of backend), but only `v1-mus64-l1snr`
+and `v2-multi` have load and parity evidence.
 
 Measured Torch-vs-MLX parity through the public `BanditSession` API on real
 audio, including a zero-padded and a near-silent tail (Apple Silicon,
@@ -170,10 +171,11 @@ folder is `~/.cache/bandit-infer/`, overridable by `weights_dir` or
 caller-provided SHA-256. Official URLs and sizes are in the packaged
 `checkpoints.toml`.
 
-Automatic cache/download is enabled only for `v1-mus64-l1snr` and `v2-multi`,
-whose SHA-256 values were computed from official downloads. The remaining
-entries fail closed until they receive the same evidence. Zenodo's published
-MD5 is retained for provenance, but never substitutes for SHA-256.
+Automatic cache/download is enabled for all 28 entries. Every SHA-256 value
+was computed from the official Zenodo download, after confirming that download
+matched Zenodo's published size and MD5. An entry with a blank SHA-256 still
+fails closed. Zenodo's MD5 is retained for provenance, but never substitutes
+for SHA-256.
 
 ## What this project will NEVER bundle
 
