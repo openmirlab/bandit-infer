@@ -7,6 +7,7 @@ Reads: bandit_infer.api.
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 
 import numpy as np
@@ -15,6 +16,7 @@ import torch
 
 from bandit_infer import BanditSession
 from bandit_infer import api
+from bandit_infer.checkpoints import ChecksumError
 
 
 class FakeBackend:
@@ -67,3 +69,35 @@ def test_framework_backend_argument_is_not_public_api() -> None:
         BanditSession("v1-mus64-l1snr", **{"backend": "torch"})
     with pytest.raises(TypeError, match="unexpected keyword argument"):
         api.separate(np.zeros(8), sample_rate=44100, **{"backend": "torch"})
+
+
+def test_custom_checkpoint_cache_matches_loaded_bytes(monkeypatch, tmp_path):
+    checkpoint = tmp_path / "manual" / "weights.ckpt"
+    digest = hashlib.sha256(b"custom model").hexdigest()
+    session = BanditSession(
+        device="cpu", checkpoint_path=checkpoint, checkpoint_sha256=digest,
+        weights_dir=tmp_path / "unused-cache",
+    )
+    info = session.cache_info()
+    assert info["path"] == checkpoint
+    assert not info["exists"] and not info["verified"]
+    assert not checkpoint.parent.exists()
+    checkpoint.parent.mkdir()
+    checkpoint.write_bytes(b"custom model")
+    seen = []
+
+    def load(spec, path, device):
+        seen.append(path)
+        return FakeBackend()
+
+    monkeypatch.setattr(api, "load_runtime_backend", load)
+    assert session.cache_info()["verified"]
+    session.load()
+    assert seen == [checkpoint]
+    assert session.cache_info()["path"] == seen[0]
+    assert not (tmp_path / "unused-cache").exists()
+    checkpoint.write_bytes(b"corrupt")
+    assert not session.cache_info()["verified"]
+    session.release()
+    with pytest.raises(ChecksumError):
+        session.load()

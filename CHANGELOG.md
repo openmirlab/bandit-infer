@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Restore Python 3.10 checkpoint configuration imports using a conditional
+  `tomli` backport, and run CI commands with the declared matrix interpreter.
+- Make session cache inspection honor the same custom checkpoint path and
+  SHA-256 as loading, including missing and corrupted override files.
+
 ### Verified SHA-256 for every catalog checkpoint (2026-09-14)
 
 - Filled in `sha256` for the 26 `checkpoints.toml` entries that had it blank,

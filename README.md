@@ -106,7 +106,9 @@ Apple accelerator execution path.
 Weights will never be bundled, committed, rehosted, or converted. The default
 folder is `~/.cache/bandit-infer/`, overridable by `weights_dir` or
 `BANDIT_INFER_WEIGHTS`; direct-path loading accepts `checkpoint_path` plus a
-caller-provided SHA-256. Official URLs and sizes are in the packaged
+caller-provided SHA-256. `session.cache_info()` inspects that same direct path
+and checksum when supplied, including missing or corrupted files, without
+creating a cache directory or downloading. Official URLs and sizes are in the packaged
 `checkpoints.toml`.
 
 Automatic cache/download is enabled for all 28 entries. Every SHA-256 value
@@ -123,6 +125,10 @@ for SHA-256.
 - the baseline Demucs/UMXHQ artifacts in v1's Zenodo record.
 
 ## Development
+
+Python 3.10 uses the declared `tomli` backport for checkpoint configuration;
+Python 3.11 and newer use the standard-library parser. CI explicitly selects
+each matrix interpreter for dependency sync and tests.
 
 Run the commands recorded in [CLAUDE.md](CLAUDE.md). The two flagship parity
 gates require caller-local official checkpoints and GPU memory; fixtures are

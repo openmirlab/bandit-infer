@@ -61,7 +61,11 @@ class BanditSession:
         return self._status
 
     def cache_info(self) -> dict[str, object]:
-        return cache_info(self.spec, cache_dir=self._weights_dir)
+        return cache_info(
+            self.spec, cache_dir=self._weights_dir,
+            checkpoint_path=self._checkpoint_path,
+            checkpoint_sha256=self._checkpoint_sha256,
+        )
 
     def load(self) -> "BanditSession":
         if self._status == "closed":

@@ -43,6 +43,13 @@ seam tests were removed before publication. Do not reintroduce a second runtime
 path unless it comes with fresh parity fixtures, package metadata, and public
 API review.
 
+Checkpoint inspection and loading share `checkpoints._candidate`: custom
+`checkpoint_path` and `checkpoint_sha256` are forwarded from the session to
+both operations. Inspection is read-only, reports missing/corrupt overrides,
+and never falls back to an unrelated default cache. Python 3.10 uses the
+conditional `tomli` dependency; newer interpreters use `tomllib`. CI pins its
+matrix interpreter explicitly for sync, tests, build, and verification.
+
 ## Testing philosophy
 
 Offline unit/regression tests run by default (`addopts = "-m 'not
@@ -58,6 +65,9 @@ just against itself.
 ```bash
 uv sync --all-extras --dev
 uv run pytest -q
+# Explicit lowest-supported interpreter; run the full offline suite
+uv sync --python 3.10 --all-extras --dev
+uv run --python 3.10 pytest -q
 uv run python -m build
 uv run python tools/verify_inference_only.py
 uv run python tools/verify_wheel.py
@@ -76,4 +86,6 @@ and v2 Multi parity commands pass when supplied the recorded official
 checkpoints. Fixture generation is run from a separately provisioned
 environment against untouched upstream source; it is intentionally not a
 package runtime dependency. The all-family real compatibility command remains
-an open gate because the remaining 26 official checkpoint bytes are unverified.
+an open gate because the remaining 26 integrity-verified artifacts still lack graph-load
+and upstream-output parity evidence. The compatibility script is a blocked
+placeholder, not a successful model-validation gate.

@@ -11,12 +11,16 @@ from __future__ import annotations
 import hashlib
 import os
 import shutil
-import tomllib
 import urllib.request
 from dataclasses import dataclass
 from importlib.resources import files
 from pathlib import Path
 from typing import Any
+
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10
+    import tomli as tomllib
 
 
 class CheckpointConfigError(ValueError):
@@ -98,15 +102,29 @@ def _digest(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _candidate(spec: CheckpointSpec, cache_dir: Path | None) -> Path:
-    return (cache_dir or default_cache_dir()) / spec.filename
+def _candidate(
+    spec: CheckpointSpec,
+    cache_dir: Path | None,
+    checkpoint_path: Path | None,
+    checkpoint_sha256: str | None,
+) -> tuple[Path, str]:
+    """Own path and integrity selection for both inspection and materialization."""
+    path = Path(checkpoint_path) if checkpoint_path is not None else (cache_dir or default_cache_dir()) / spec.filename
+    return path, checkpoint_sha256 or spec.sha256
 
 
-def cache_info(spec: CheckpointSpec | None = None, *, cache_dir: Path | None = None) -> dict[str, Any]:
+def cache_info(
+    spec: CheckpointSpec | None = None,
+    *,
+    cache_dir: Path | None = None,
+    checkpoint_path: Path | None = None,
+    checkpoint_sha256: str | None = None,
+) -> dict[str, Any]:
     """Return read-only cache status using the exact resolver candidate path."""
     spec = spec or get_spec()
-    path = _candidate(spec, cache_dir)
-    return {"key": spec.key, "path": path, "exists": path.is_file(), "verified": bool(spec.sha256) and path.is_file() and _digest(path) == spec.sha256}
+    path, expected = _candidate(spec, cache_dir, checkpoint_path, checkpoint_sha256)
+    exists = path.is_file()
+    return {"key": spec.key, "path": path, "exists": exists, "verified": bool(expected) and exists and _digest(path) == expected}
 
 
 def _verify(path: Path, expected: str) -> None:
@@ -126,14 +144,12 @@ def resolve_checkpoint(
     checkpoint_sha256: str | None = None,
 ) -> Path:
     """Resolve manual/direct/cache paths, downloading atomically only with SHA-256."""
-    expected = checkpoint_sha256 or spec.sha256
+    target, expected = _candidate(spec, cache_dir, checkpoint_path, checkpoint_sha256)
     if checkpoint_path is not None:
-        path = Path(checkpoint_path)
-        if not path.is_file():
-            raise FileNotFoundError(path)
-        _verify(path, expected)
-        return path
-    target = _candidate(spec, cache_dir)
+        if not target.is_file():
+            raise FileNotFoundError(target)
+        _verify(target, expected)
+        return target
     if target.is_file():
         _verify(target, expected)
         return target
