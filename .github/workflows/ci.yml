@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - run: uv python install ${{ matrix.python }}
-      - run: uv sync --all-extras --dev
-      - run: uv run pytest -q
-      - run: uv run python -m build
-      - run: uv run python tools/verify_inference_only.py
-      - run: uv run python tools/verify_wheel.py
+      - run: uv sync --python "${{ matrix.python }}" --all-extras --dev
+      - run: uv run --python "${{ matrix.python }}" python -m pytest -q
+      - run: uv run --python "${{ matrix.python }}" python -m build
+      - run: uv run --python "${{ matrix.python }}" python tools/verify_inference_only.py
+      - run: uv run --python "${{ matrix.python }}" python tools/verify_wheel.py
