@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+
+- Correct README installation guidance for the current Git-only distribution of `bandit-infer`.
 - Restore Python 3.10 checkpoint configuration imports using a conditional
   `tomli` backport, and run CI commands with the declared matrix interpreter.
 - Make session cache inspection honor the same custom checkpoint path and
