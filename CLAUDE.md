@@ -1,5 +1,7 @@
 # bandit-infer maintainer notes
 
+**Distribution:** `bandit-infer` is not on PyPI; use the source installation in README.md.
+
 ## Scope and status
 
 This repo is an independent inference-only Bandit package. It credits Karn

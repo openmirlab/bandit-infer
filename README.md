@@ -64,8 +64,12 @@ official file; it does not prove this package loads it correctly.
 
 ## Install
 
+`bandit-infer` is not published on PyPI. Install from the repository:
+
 ```bash
-pip install bandit-infer
+git clone https://github.com/openmirlab/bandit-infer.git
+cd bandit-infer
+python -m pip install .
 ```
 
 For development, use `uv sync --all-extras --dev`.
